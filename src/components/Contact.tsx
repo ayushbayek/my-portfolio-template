@@ -1,29 +1,38 @@
-import React, { useRef, useState } from 'react';
-import '../assets/styles/Contact.scss';
+import React, { useRef, useState } from "react";
+import "../assets/styles/Contact.scss";
 // import emailjs from '@emailjs/browser';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
-import TextField from '@mui/material/TextField';
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
+import TextField from "@mui/material/TextField";
+import { contactInfo } from "../data/contact";
 
 function Contact() {
-
-  const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [message, setMessage] = useState<string>('');
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
 
   const [nameError, setNameError] = useState<boolean>(false);
   const [emailError, setEmailError] = useState<boolean>(false);
   const [messageError, setMessageError] = useState<boolean>(false);
+
+  const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const newMessage = e.target.value;
+    if (newMessage.length <= 1000) {
+      setMessage(newMessage);
+    }
+  };
+
+  const charCount = message.length;
 
   const form = useRef();
 
   const sendEmail = (e: any) => {
     e.preventDefault();
 
-    setNameError(name === '');
-    setEmailError(email === '');
-    setMessageError(message === '');
+    setNameError(name === "");
+    setEmailError(email === "");
+    setMessageError(message === "");
 
     /* Uncomment below if you want to enable the emailJS */
 
@@ -50,64 +59,77 @@ function Contact() {
   };
 
   return (
-    <div id="contact">
-      <div className="items-container">
-        <div className="contact_wrapper">
-          <h1>Contact Me</h1>
-          <p>Got a project waiting to be realized? Let's collaborate and make it happen!</p>
-          <Box
-            ref={form}
-            component="form"
-            noValidate
-            autoComplete="off"
-            className='contact-form'
-          >
-            <div className='form-flex'>
-              <TextField
-                required
-                id="outlined-required"
-                label="Your Name"
-                placeholder="What's your name?"
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-                error={nameError}
-                helperText={nameError ? "Please enter your name" : ""}
-              />
-              <TextField
-                required
-                id="outlined-required"
-                label="Email / Phone"
-                placeholder="How can I reach you?"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                error={emailError}
-                helperText={emailError ? "Please enter your email or phone number" : ""}
-              />
-            </div>
+    <div className='contact-section' id='contact'>
+      <div className='contact-container'>
+        <div className='contact-header'>
+          <h1>{contactInfo.title}</h1>
+          <p>{contactInfo.subtitle}</p>
+        </div>
+        <Box
+          ref={form}
+          component='form'
+          noValidate
+          autoComplete='off'
+          className='contact-form'
+        >
+          <div className='form-flex'>
             <TextField
               required
-              id="outlined-multiline-static"
-              label="Message"
-              placeholder="Send me any inquiries or questions"
-              multiline
-              rows={10}
-              className="body-form"
-              value={message}
+              id='outlined-required'
+              label={contactInfo.formFields.name.label}
+              placeholder={contactInfo.formFields.name.placeholder}
+              value={name}
               onChange={(e) => {
-                setMessage(e.target.value);
+                setName(e.target.value);
               }}
-              error={messageError}
-              helperText={messageError ? "Please enter the message" : ""}
+              error={nameError}
+              helperText={
+                nameError ? contactInfo.formFields.name.errorMessage : ""
+              }
             />
-            <Button variant="contained" endIcon={<SendIcon />} onClick={sendEmail}>
-              Send
-            </Button>
-          </Box>
-        </div>
+            <TextField
+              required
+              id='outlined-required'
+              label={contactInfo.formFields.email.label}
+              placeholder={contactInfo.formFields.email.placeholder}
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              error={emailError}
+              helperText={
+                emailError ? contactInfo.formFields.email.errorMessage : ""
+              }
+            />
+          </div>
+          <TextField
+            required
+            id='outlined-multiline-static'
+            label={contactInfo.formFields.message.label}
+            placeholder={contactInfo.formFields.message.placeholder}
+            multiline
+            rows={10}
+            className='body-form'
+            value={message}
+            onChange={handleMessageChange}
+            error={messageError || charCount > 1000}
+            helperText={
+              messageError
+                ? contactInfo.formFields.message.errorMessage
+                : `${charCount}/1000 characters`
+            }
+            inputProps={{
+              maxLength: 1000
+            }}
+          />
+          <Button
+            variant='contained'
+            endIcon={<SendIcon />}
+            onClick={sendEmail}
+          >
+            {contactInfo.submitButton.text}
+          </Button>
+        </Box>
       </div>
     </div>
   );

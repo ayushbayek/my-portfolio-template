@@ -5,3 +5,5 @@ export { default as Expertise } from "./Expertise";
 export { default as Timeline } from "./Timeline";
 export { default as Project } from "./Project";
 export { default as Contact } from "./Contact";
+export { default as Chat } from "./Chat";
+export { default as Particles } from "./Particles";

@@ -7,6 +7,8 @@ import {
   Contact,
   Navigation,
   Footer,
+  Chat,
+  Particles
 } from "./components";
 import FadeIn from './components/FadeIn';
 import './index.scss';
@@ -30,11 +32,42 @@ function App() {
     <div className={`main-container ${mode === 'dark' ? 'dark-mode' : 'light-mode'}`}>
         <Navigation parentToChild={{mode}} modeChange={handleModeChange}/>
         <FadeIn transitionDuration={700}>
-            <Main/>
-            <Expertise/>
-            <Timeline/>
-            <Project/>
-            <Contact/>
+            <div className="section-background">
+                <Particles />
+                <div className="section-content">
+                    <Main/>
+                </div>
+            </div>
+            <div className="section-background">
+                <Particles />
+                <div className="section-content">
+                    <Expertise/>
+                </div>
+            </div>
+            <div className="section-background">
+                <Particles />
+                <div className="section-content">
+                    <Timeline/>
+                </div>
+            </div>
+            <div className="section-background">
+                <Particles />
+                <div className="section-content">
+                    <Project/>
+                </div>
+            </div>
+            <div className="section-background">
+                <Particles />
+                <div className="section-content">
+                    <Chat/>
+                </div>
+            </div>
+            <div className="section-background">
+                <Particles />
+                <div className="section-content">
+                    <Contact/>
+                </div>
+            </div>
         </FadeIn>
         <Footer />
     </div>
