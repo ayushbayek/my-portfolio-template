@@ -264,6 +264,37 @@
     .MuiButton-endIcon {
       margin-left: 0.5rem;
     }
+
+    &.success-button {
+      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%) !important;
+      animation: successPulse 0.6s ease-in-out;
+    }
+  }
+
+  // Submit message styles
+  .submit-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+    &.success {
+      background-color: #f0fff4;
+      color: #2d7d32;
+      border: 1px solid #c6f6d5;
+    }
+
+    &.error {
+      background-color: #fed7d7;
+      color: #c53030;
+      border: 1px solid #feb2b2;
+    }
+
+    &.idle {
+      display: none;
+    }
   }
 }
 

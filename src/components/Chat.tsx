@@ -79,25 +79,35 @@ const Chat: React.FC = () => {
       setMessages((prev) => [...prev, botMessagePlaceholder]);
 
       // Replace this with your FastAPI endpoint
-      const response = await fetch("http://localhost:8000/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: inputText,
-        }),
-      });
+      const response = await fetch(
+        "https://virtu-you.onrender.com/api/v1/chat/message",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: inputText,
+            history: messages
+              .map((msg) => ({
+                role: msg.isUser ? "user" : "assistant",
+                content: msg.text,
+              }))
+              .filter((msg) => msg.content.trim() !== ""), // Filter out empty messages
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
+      console.log(data);
 
       // Simulate typing effect for the response
       await simulateTyping(
-        data.message || "I'm not sure how to respond to that."
+        data.response || "I'm not sure how to respond to that."
       );
     } catch (err) {
       console.error("Error calling FastAPI:", err);

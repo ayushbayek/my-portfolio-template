@@ -11,6 +11,7 @@ export interface ContactInfo {
       label: string;
       placeholder: string;
       errorMessage: string;
+      invalidEmailMessage: string;
     };
     message: {
       label: string;
@@ -34,9 +35,10 @@ export const contactInfo: ContactInfo = {
       errorMessage: "Please enter your name"
     },
     email: {
-      label: "Email / Phone",
-      placeholder: "How can I reach you?",
-      errorMessage: "Please enter your email or phone number"
+      label: "Email",
+      placeholder: "Enter your email address",
+      errorMessage: "Please enter your email address",
+      invalidEmailMessage: "Please enter a valid email address"
     },
     message: {
       label: "Message",
