@@ -161,6 +161,12 @@ const Chat: React.FC = () => {
     "How can I contact you?",
   ];
 
+  // Show fewer quick replies on mobile
+  const getQuickReplies = () => {
+    const isMobile = window.innerWidth <= 768;
+    return isMobile ? quickReplies.slice(0, 2) : quickReplies;
+  };
+
   return (
     <div className='chat-section' id='chat'>
       <div className='chat-container'>
@@ -221,7 +227,7 @@ const Chat: React.FC = () => {
           <div className='quick-replies'>
             <p>Quick questions:</p>
             <div className='quick-reply-buttons'>
-              {quickReplies.map((reply, index) => (
+              {getQuickReplies().map((reply, index) => (
                 <button
                   key={index}
                   className='quick-reply-btn'
